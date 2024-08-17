@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Resources:
+     S3Bucket:
+        Type: AWS::S3::Bucket
+        DeletionPolicy: Retain
+        Properties:
+          BucketName: cfn-101-bucket
+          BucketEncryption:
+              ServerSideEncryptionConfiguration:
+                    - ServerSideEncryptionByDefault:
+                        SSEAlgorithm: AES256
+          Tags:
+               - Key: Env
+                 Value: Cloudformation 101
+          
