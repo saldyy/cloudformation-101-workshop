@@ -1,0 +1,56 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: AWS CloudFormation workshop - Mappings 
+
+Metadata:
+  AWS::CloudFormation::Interface:
+    ParameterGroups:
+      - Label:
+          default: 'Amazon EC2 Configuration'
+        Parameters:
+          # Remove InstanceType group.
+          - InstanceType
+          - AmiID
+    ParameterLabels:
+      # Remove the InstanceType parameter label.
+      InstanceType:
+        default: 'Type of EC2 Instance'
+      AmiID:
+        default: 'Amazon Machine Image ID'
+
+Parameters:
+  Environment:
+    Type: String
+    Default: Test
+    AllowedValues:
+      - Test
+      - Dev
+    Description: 'Enter environment to deploy, only allow `Test` and `Dev`. Default is `Test`'
+
+  AmiID:
+    Type: AWS::EC2::Image::Id
+    Description: 'The ID of the AMI.'
+
+# Add a Mappings section here!
+
+Mappings:
+  InstanceTypeByEnv:
+    Test:
+      InstanceType: t2.micro
+    Dev:
+      InstanceType: t2.small
+
+Resources:
+  WebServerInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !Ref AmiID
+      # Update the 'InstanceType' property with !FindInMap function
+      InstanceType: !FindInMap
+        - InstanceTypeByEnv
+        - !Ref Environment
+        - InstanceType
+      Tags:
+        - Key: Name
+          # Value: !Join [ '-', [ !Ref InstanceType, webserver ] ] # replace the 'InstanceType' with 'EnvironmentType'
+          Value: !Sub webserver-${Environment}
