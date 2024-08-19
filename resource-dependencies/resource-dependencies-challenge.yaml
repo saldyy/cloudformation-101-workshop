@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: AWS CloudFormation workshop - Resource Dependencies Lab with DependsOn attribute
+
+# Add your code below!
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    DependsOn: EC2Instance 
+    Properties:
+      Tags:
+        - Key: Name
+          Value: Resource-dependencies-workshop
+
+  EC2Instance:
+    Type: AWS::EC2::Instance
+    DependsOn: SecurityGroup
+    Properties:
+      InstanceType: t2.micro
+      ImageId: ami-0a6b545f62129c495
+      Tags:
+        - Key: Name
+          Value: Resource-dependencies-workshop
+
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Workshop Security Group
+      Tags:
+        - Key: Name
+          Value: Resource-dependencies-workshop
+
+  SecurityGroupIngress:
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      GroupId: !GetAtt SecurityGroup.GroupId
+      IpProtocol: tcp
+      FromPort: 80
+      ToPort: 80
+      CidrIp: 0.0.0.0/0
+
