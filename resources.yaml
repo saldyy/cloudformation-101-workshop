@@ -1,7 +1,5 @@
-# Add Format Version section here.
 AWSTemplateFormatVersion: "2010-09-09"
 
-# Add Description section here.
 Description: AWS Cloudformation 101 workshop
 
 # Add Metadata section here.
