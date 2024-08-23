@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: AWS CloudFormation workshop - Package and deploy
+
+Resources:
+  LambdaBasicExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  NodejsFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: cfn-workshop-nodejs-function
+      Description: Nodejs Function to return specific TimeZone time
+      Runtime: nodejs20.x
+      Role: !GetAtt LambdaBasicExecutionRole.Arn
+      Handler: index.handler
+      Code: lambda/
+
+Outputs:
+  LambdaFunction:
+    Description: AWS Lambda Nodejs Function
+    Value: !Ref NodejsFunction
