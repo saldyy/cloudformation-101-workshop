@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+Description: AWS CloudFormation workshop - Resource Importing (uksb-1q9p31idr) (tag:resource-importing).
+
+Metadata:
+  cfn-lint:
+    config:
+      ignore_checks:
+        - W3011
+
+Parameters:
+  Topic2Name:
+    Type: String
+    Default: Topic-CFN
+    Description: Name of the first Amazon SNS topic you created with the Amazon SNS console.
+
+Resources:
+  SNSTopic2:
+    DeletionPolicy: Retain
+    Type: AWS::SNS::Topic
+    Properties:
+      TopicName: !Ref Topic2Name

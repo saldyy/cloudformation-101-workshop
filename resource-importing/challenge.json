@@ -1,0 +1,9 @@
+[
+  {
+    "ResourceType": "AWS::EC2::Instance",
+    "LogicalResourceId": "Instance",
+    "ResourceIdentifier": {
+      "InstanceId": "i-0707a3238e6de4feb"
+    }
+  }
+]

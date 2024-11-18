@@ -1,0 +1,9 @@
+[
+  {
+    "ResourceType": "AWS::SNS::Topic",
+    "LogicalResourceId": "SNSTopic2",
+    "ResourceIdentifier": {
+      "TopicArn": "arn:aws:sns:ap-southeast-1:454159633175:Topic-CFN-1"
+    }
+  }
+]
